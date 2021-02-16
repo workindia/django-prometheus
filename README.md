@@ -1,8 +1,9 @@
 # django-prometheus
 Export Django monitoring metrics for Prometheus.io
 
-[![PyPI version](https://badge.fury.io/py/django-prometheus.svg)](http://badge.fury.io/py/django-prometheus)
-[![Build Status](https://travis-ci.org/korfuri/django-prometheus.svg?branch=master)](https://travis-ci.org/korfuri/django-prometheus)
+# What's Different
+
+* Exported response status code by endpoint and method for Django>=1.8 which is not supported by django-prometheus==1.0.15
 
 ## Usage
 
