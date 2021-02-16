@@ -78,6 +78,11 @@ responses_by_status = Counter(
     'django_http_responses_total_by_status',
     'Count of responses by status.',
     ['status'])
+responses_by_status_view_method = Counter(
+    "django_http_responses_total_by_status_view_method",
+    "Count of responses by status, view, method.",
+    ["status", "endpoint", "method"],
+)
 responses_body_bytes = Histogram(
     'django_http_responses_body_total_bytes',
     'Histogram of responses by body size.',
@@ -148,6 +153,14 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         responses_by_status.labels(str(response.status_code)).inc()
+        if hasattr(response, 'status_code'):
+            responses_by_status_view_method.labels(
+                status=str(response.status_code),
+                # view=self._get_view_name(request),
+                endpoint=request.get_full_path(),
+                method=self._method(request)
+            )
+        responses_by_status_view_method.inc()
         if hasattr(response, 'charset'):
             responses_by_charset.labels(str(response.charset)).inc()
         if hasattr(response, 'streaming') and response.streaming:
