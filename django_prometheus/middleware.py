@@ -159,8 +159,7 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
                 # view=self._get_view_name(request),
                 endpoint=request.get_full_path(),
                 method=self._method(request)
-            )
-        responses_by_status_view_method.inc()
+            ).inc()
         if hasattr(response, 'charset'):
             responses_by_charset.labels(str(response.charset)).inc()
         if hasattr(response, 'streaming') and response.streaming:
