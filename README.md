@@ -3,7 +3,7 @@ Export Django monitoring metrics for Prometheus.io
 
 # What's Different
 
-* Exported response status code by endpoint and method for Django>=1.8 which is not supported by django-prometheus==1.0.15
+* Exported response status code by view and http method for Django>=1.8 which is not supported by django-prometheus==1.0.15
 
 ## Usage
 

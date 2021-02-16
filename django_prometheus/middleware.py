@@ -81,7 +81,7 @@ responses_by_status = Counter(
 responses_by_status_view_method = Counter(
     "django_http_responses_total_by_status_view_method",
     "Count of responses by status, view, method.",
-    ["status", "endpoint", "method"],
+    ["status", "view", "method"],
 )
 responses_body_bytes = Histogram(
     'django_http_responses_body_total_bytes',
@@ -156,8 +156,7 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
         if hasattr(response, 'status_code'):
             responses_by_status_view_method.labels(
                 status=str(response.status_code),
-                # view=self._get_view_name(request),
-                endpoint=request.get_full_path(),
+                view=self._get_view_name(request),
                 method=self._method(request)
             ).inc()
         if hasattr(response, 'charset'):
